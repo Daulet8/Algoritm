@@ -1,0 +1,142 @@
+Лабораторная работа №14
+Тема: Комплексные задачи (применение алгоритмов)
+
+Задача 1. Найти все дубликаты
+arr = [1, 2, 3, 2, 4, 1, 5]
+
+seen = set()
+duplicates = set()
+
+for num in arr:
+    if num in seen:
+        duplicates.add(num)
+    else:
+        seen.add(num)
+
+print(list(duplicates))
+
+Задача 2. Самое частое число
+arr = [1, 3, 2, 3, 4, 3, 2]
+
+freq = {}
+
+for num in arr:
+    freq[num] = freq.get(num, 0) + 1
+
+most_common = max(freq, key=freq.get)
+
+print(most_common)
+
+Задача 4. Сортировка строк по длине
+strings = ["apple", "kiwi", "banana", "fig"]
+
+sorted_strings = sorted(strings, key=len)
+
+print(sorted_strings)
+
+Задача 5. Топ-3 слов
+text = "hello world hello python world hello code"
+
+words = text.split()
+freq = {}
+
+for word in words:
+    freq[word] = freq.get(word, 0) + 1
+
+top3 = sorted(freq.items(), key=lambda x: x[1], reverse=True)[:3]
+
+print(top3)
+
+адача 6. Удалить дубликаты (с сохранением порядка)
+arr = [1, 2, 2, 3, 1, 4]
+
+seen = set()
+result = []
+
+for num in arr:
+    if num not in seen:
+        result.append(num)
+        seen.add(num)
+
+print(result)
+
+Задача 7. Пересечение списков
+a = [1, 2, 3, 4]
+b = [3, 4, 5, 6]
+
+intersection = list(set(a) & set(b))
+
+print(intersection)
+
+Задача 8. Студент с максимальным баллом
+students = {
+    "Алия": 85,
+    "Бек": 92,
+    "Санжар": 78
+}
+
+top_student = max(students, key=students.get)
+
+print(top_student, students[top_student])
+
+Задача 9. Чётные и нечётные
+arr = [1, 2, 3, 4, 5, 6]
+
+even = [x for x in arr if x % 2 == 0]
+odd = [x for x in arr if x % 2 != 0]
+
+print("Чётные:", even)
+print("Нечётные:", odd)
+
+Задача 10. Самая длинная последовательность одинаковых элементов
+arr = [1, 1, 2, 2, 2, 3, 3, 3, 3, 2]
+
+max_len = 1
+current_len = 1
+
+for i in range(1, len(arr)):
+    if arr[i] == arr[i - 1]:
+        current_len += 1
+        max_len = max(max_len, current_len)
+    else:
+        current_len = 1
+
+print(max_len)
+
+Задача 11. Мини-система пользователей
+users = {}
+
+def add_user(name, age):
+    users[name] = age
+
+def find_user(name):
+    return users.get(name, "Пользователь не найден")
+
+def delete_user(name):
+    users.pop(name, None)
+
+# Пример использования
+add_user("Алия", 20)
+add_user("Бек", 22)
+
+print(find_user("Алия"))
+
+delete_user("Бек")
+print(users)
+
+Контрольные вопросы
+
+1. Как выбрать алгоритм?
+Нужно анализировать задачу: объём данных, требования к скорости и памяти.
+
+2. Когда использовать хеш-таблицу?
+Когда нужен быстрый поиск, вставка или проверка наличия (O(1)).
+
+3. Что такое временная сложность?
+Это оценка того, как быстро работает алгоритм при увеличении входных данных (например, O(n)).
+
+4. Почему важно избегать вложенных циклов?
+Они увеличивают сложность (например, O(n²)), что сильно замедляет программу.
+
+5. Что такое оптимизация алгоритма?
+Это улучшение эффективности (скорости или памяти) решения.
