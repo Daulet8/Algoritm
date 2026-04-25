@@ -1,0 +1,146 @@
+Лабораторная работа №11
+Тема: Графы и алгоритмы обхода (DFS, BFS)
+
+Задача 1. Создание графа
+graph = {
+    'A': ['B', 'C'],
+    'B': ['A', 'D'],
+    'C': ['A', 'E'],
+    'D': ['B'],
+    'E': ['C']
+}
+
+Задача 2. Добавление новой вершины
+graph['F'] = ['A', 'D']
+graph['A'].append('F')
+graph['D'].append('F')
+
+Задача 3. Соседи вершины
+def get_neighbors(graph, node):
+    return graph.get(node, [])
+
+print(get_neighbors(graph, 'A'))
+
+Задача 4. DFS (рекурсивный)
+def dfs_recursive(graph, node, visited=None):
+    if visited is None:
+        visited = set()
+
+    if node not in visited:
+        print(node, end=' ')
+        visited.add(node)
+
+        for neighbor in graph[node]:
+            dfs_recursive(graph, neighbor, visited)
+
+    return visited
+
+dfs_recursive(graph, 'A')
+
+Задача 5. DFS (через стек)
+def dfs_stack(graph, start):
+    visited = set()
+    stack = [start]
+
+    while stack:
+        node = stack.pop()
+
+        if node not in visited:
+            print(node, end=' ')
+            visited.add(node)
+
+            stack.extend(reversed(graph[node]))
+
+dfs_stack(graph, 'A')
+
+Задача 6. BFS (через очередь)
+from collections import deque
+
+def bfs(graph, start):
+    visited = set()
+    queue = deque([start])
+
+    while queue:
+        node = queue.popleft()
+
+        if node not in visited:
+            print(node, end=' ')
+            visited.add(node)
+
+            queue.extend(graph[node])
+
+bfs(graph, 'A')
+
+Задача 7. Программа с вводом
+start = input("Введите стартовую вершину: ")
+
+print("DFS:")
+dfs_recursive(graph, start)
+
+print("\nBFS:")
+bfs(graph, start)
+
+Задача 8. Проверка существования пути
+def has_path(graph, start, end, visited=None):
+    if visited is None:
+        visited = set()
+
+    if start == end:
+        return True
+
+    visited.add(start)
+
+    for neighbor in graph[start]:
+        if neighbor not in visited:
+            if has_path(graph, neighbor, end, visited):
+                return True
+
+    return False
+
+print(has_path(graph, 'A', 'E'))
+
+Задача 9. Количество достижимых вершин
+def reachable_count(graph, start):
+    visited = dfs_recursive(graph, start)
+    return len(visited)
+
+print("\nДостижимых вершин:", reachable_count(graph, 'A'))
+
+Задача 10. Кратчайший путь (BFS)
+from collections import deque
+
+def shortest_path(graph, start, end):
+    queue = deque([(start, [start])])
+    visited = set()
+
+    while queue:
+        node, path = queue.popleft()
+
+        if node == end:
+            return path
+
+        if node not in visited:
+            visited.add(node)
+
+            for neighbor in graph[node]:
+                queue.append((neighbor, path + [neighbor]))
+
+    return None
+
+print(shortest_path(graph, 'A', 'E'))
+
+1. Что такое граф?
+Граф — это структура данных, состоящая из вершин (узлов) и рёбер (связей между ними).
+
+2. Чем DFS отличается от BFS?
+
+DFS идёт "вглубь" (использует стек/рекурсию)
+BFS идёт "вширь" по уровням (использует очередь)
+
+3. Почему необходимо хранить visited?
+Чтобы избежать зацикливания и повторного посещения вершин.
+
+4. Как представляется граф в Python?
+Чаще всего — словарём (список смежности):
+
+graph = {'A': ['B', 'C']}
